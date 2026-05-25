@@ -1,0 +1,5 @@
+.venv/
+project/.env
+project/chroma_db/
+project/uploaded_files/
+__pycache__/
