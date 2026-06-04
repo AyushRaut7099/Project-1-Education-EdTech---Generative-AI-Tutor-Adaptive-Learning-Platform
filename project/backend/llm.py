@@ -16,12 +16,17 @@ client = OpenAI( # Initializing the OpenAI client with the API key and base URL 
     api_key=os.getenv("OPENROUTER_API_KEY"), # Retrieving the API key from environment variables
     base_url="https://openrouter.ai/api/v1"
 )
-def generate_response(context, question): # Defining a function to generate a response using the model, taking context and question as input
+def generate_response(context, question, chat_history): # Defining a function to generate a response using the model, taking context and question as input
     prompt = f"""
     You are an expert tutor.
     Use ONLY the context below to answer the question.
+    Use can use the chat history for reference but do not include it in the answer.
+    GIVE ANSWER IN DETAILED MANNER.
     If answer is not present in context, say:
     "Answer not found in uploaded document."
+    
+    Previous Conversation:
+    {chat_history}
 
     Context:
     {context}
