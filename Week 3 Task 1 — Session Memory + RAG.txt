@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------------------------------------------------------
+Week 3 Task 1 — Session Memory + RAG
+
+START
+│
+├── Check Memory Exists?
+│
+├── NO
+│    │
+│    └── Create Empty Chat History
+│
+└── YES
+     │
+     └── Load Existing Chat History
+
+		│
+		▼
+	User Enters Question
+		│
+		▼
+	Get Previous Chat History(from Session Memory)
+		│
+		▼
+	Convert Question to Embedding
+		│
+		▼
+	Search ChromaDB
+		│
+		▼
+	Retrieve Top-K Relevant Chunks
+		│
+		▼
+	Build Prompt
+
+	Prompt Contains:
+	    1. Previous Chat History
+    	    2. Retrieved Chunks
+	    3. Current Question
+		│
+		▼
+	Send Prompt to LLM
+		│
+		▼
+	Generate Answer
+		│
+		▼
+	Display Answer
+		│
+		▼
+	Store In Session Memory
+		Store:
+		    -> User Question
+		    -> AI Answer
+		│
+		▼
+	Wait For Next Question
+		│
+		└── Repeat Until User Ends Chat
+
+END
+-------------------------------------------------------------------------------------------------------------------------------
