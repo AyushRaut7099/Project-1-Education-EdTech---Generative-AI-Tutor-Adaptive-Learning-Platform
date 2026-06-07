@@ -38,10 +38,11 @@ if user_question:
     if st.button("Generate Quiz"):# When the user clicks the "Generate Quiz" button, it will trigger the generation of quiz questions based on the retrieved context.
     # Generate 5 MCQs using retrieved context
         quiz_data = generate_quiz(context)# Generate quiz questions based on the retrieved context using the generate_quiz function imported from quiz_generator.py. The generated quiz data will be stored in the quiz_data variable.
-        st.write("Quiz Data:", quiz_data)
-        st.write("Number of Questions:", len(quiz_data))
         # Store generated quiz in memory
         st.session_state.quiz_questions = quiz_data#store the generated quiz ques in quiz_questions memory which we created at the beginning of the code
+        st.session_state.quiz_state["current_question"] = 0
+        st.session_state.quiz_state["score"] = 0
+        st.session_state.quiz_state["answered"] = False
 if st.session_state.quiz_questions: # If there are quiz questions stored in memory, it will display the current quiz question and options to the user.
     current_index = st.session_state.quiz_state["current_question"]#que index is stored in quiz_state memory and we are accessing it here to get the current question index
     st.write("Current Index:", current_index)
@@ -77,6 +78,7 @@ if st.session_state.quiz_questions: # If there are quiz questions stored in memo
             correct_answer = current_question["answer"]# Get the correct answer for the current question from the quiz data
             if user_answer == correct_answer:
                 st.success("Correct Answer ")
+                st.session_state.quiz_state["score"] += 1
             else:
                 st.error(f"Wrong Answer ")
                 st.write(f"Correct Answer: {correct_answer}")# Display the correct answer if the user's answer is wrong
