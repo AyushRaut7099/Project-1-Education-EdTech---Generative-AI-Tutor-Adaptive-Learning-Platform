@@ -5,3 +5,5 @@ langchain-community
 chromadb
 google-generativeai
 python-dotenv
+torch
+torchvision

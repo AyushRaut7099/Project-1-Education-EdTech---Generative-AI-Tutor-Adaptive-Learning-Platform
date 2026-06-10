@@ -2,6 +2,7 @@ import streamlit as st # streamlit is a python library that allows us to create 
 from backend.retrieval import retrieve_chunks #importing the fxn to retrieve the relevant chunks froom VectorDB
 from backend.llm import generate_response #importing the fxn to generate response using Gemini free model
 from backend.quiz_generator import generate_quiz#importing the fxn to generate quiz from the context retrieved from VectorDB
+import time
 st.set_page_config(page_title="AI Chat", layout="wide")
 st.title(" AI Tutor Chat")
 if "chat_history" not in st.session_state:#it creates memory when the chat starts and it will be used to store the conversation history between the user and the AI.
@@ -33,7 +34,12 @@ if user_question:
     #answer = generate_response(context, user_question) # Generate answer using the context and user question // it was before adding memory in the next line we will add chathistory aswell
     answer=generate_response(context, user_question, chat_history)
     st.subheader("AI Answer") 
-    st.write(answer) # Display the generated answer
+    placeholder = st.empty()
+    streamed_text = ""
+    for word in answer.split():
+        streamed_text += word + " "
+        placeholder.markdown(streamed_text)
+        time.sleep(0.03)
     # Button to generate quiz from retrieved context
     if st.button("Generate Quiz"):# When the user clicks the "Generate Quiz" button, it will trigger the generation of quiz questions based on the retrieved context.
     # Generate 5 MCQs using retrieved context
