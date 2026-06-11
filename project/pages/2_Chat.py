@@ -9,6 +9,10 @@ if "chat_history" not in st.session_state:#it creates memory when the chat start
     st.session_state.chat_history = [] # It will create empty memory chat_history[]--
 if "quiz_questions" not in st.session_state: #it creates memory for quiz question when the chat starts and it will be used to store the generated quiz questions.
     st.session_state.quiz_questions = [] # It will create empty memory quiz_question[]--
+if "current_answer" not in st.session_state: #it creates memory for answer when the chat starts and it will be used to store the generated answer for the user's question.
+    st.session_state.current_answer = ""
+if "last_question" not in st.session_state: #it creates memory for last question when the chat starts and it will be used to store the last question asked by the user which will be helpful in quiz generation because when user click on generate quiz button then we can use that last question to generate quiz questions based on that question and the context retrieved from VectorDB.
+    st.session_state.last_question = ""
 if "quiz_state" not in st.session_state:#it creates memory for quiz state when the chat starts and it will be used to store the current question index and score of the quiz.
     st.session_state.quiz_state = { # It will create a dictionary quiz_state with two keys: current_question and score. current_question will keep track of the index of the current quiz question being asked, and score will keep track of the user's score in the quiz.
         "current_question": 0,
@@ -16,10 +20,11 @@ if "quiz_state" not in st.session_state:#it creates memory for quiz state when t
         "answered": False
     }
     # '''
-    # we have created 3 memories here:
+    # we have created 4 memories here:
     # 1. chat history: to store conversation history between user and AI
     # 2. quiz question: to store the generated quiz questions(5MCQs)
     # 3. quiz state: to store the current question index and score of the quiz
+    # 4. One more memory is there for storing the answer which avoids regular re-generation of answer when user click on submit button for quiz question because when user click on submit button then also it triggers the code to generate answer and it will be time consuming process so to avoid that we are storing the generated answer in current_answer memory and when user click on submit button then instead of generating answer again we will get the answer from current_answer memory and display it to user which will save a lot of time and make the app more faster.
     # '''
     
 user_question = st.text_input("Ask your question")
@@ -32,14 +37,40 @@ if user_question:
     context = "\n".join(retrieved_docs) # Combine retrieved chunks into a single context string
     chat_history = st.session_state.chat_history# get previous conversation from history memory---
     #answer = generate_response(context, user_question) # Generate answer using the context and user question // it was before adding memory in the next line we will add chathistory aswell
-    answer=generate_response(context, user_question, chat_history)
-    st.subheader("AI Answer") 
+    
+    if user_question != st.session_state.last_question: # Check if the current user question is different from the last question stored in memory. This condition is used to determine whether we need to generate a new answer or not. If the user asks the same question again, we can simply retrieve the answer from memory instead of generating it again, which will save time and computational resources.
+        answer = generate_response(
+            context,
+            user_question,
+            chat_history
+        )
+        st.session_state.current_answer = answer# Store the generated answer in current_answer memory so that we can use it later when user click on submit button for quiz question without generating the answer again.
+        st.session_state.chat_history.append(
+            {
+                "user": user_question,
+                "assistant": answer
+            }
+        )
+        st.session_state.last_question = user_question# Update the last_question memory with the current user question so that we can compare it with the next user question in the future to decide whether to generate a new answer or not.
+
+    st.subheader("AI Answer")
     placeholder = st.empty()
     streamed_text = ""
-    for word in answer.split():
+    for word in st.session_state.current_answer.split():
         streamed_text += word + " "
         placeholder.markdown(streamed_text)
         time.sleep(0.03)
+    
+    
+    
+    # answer=generate_response(context, user_question, chat_history)
+    # st.subheader("AI Answer") 
+    # placeholder = st.empty()
+    # streamed_text = ""
+    # for word in answer.split():
+    #     streamed_text += word + " "
+    #     placeholder.markdown(streamed_text)
+    #     time.sleep(0.03)
     # Button to generate quiz from retrieved context
     if st.button("Generate Quiz"):# When the user clicks the "Generate Quiz" button, it will trigger the generation of quiz questions based on the retrieved context.
     # Generate 5 MCQs using retrieved context
@@ -116,9 +147,3 @@ if st.session_state.quiz_questions: # If there are quiz questions stored in memo
     #         st.write("D.", question["optionD"])
     #         st.divider()# it means to add a visual divider between each question for better readability in the Streamlit app.
     # #after generating the answer we'll update the chat history with new question and answer
-    st.session_state.chat_history.append(
-        {
-            "user":user_question,
-            "assistant":answer
-        }
-    )

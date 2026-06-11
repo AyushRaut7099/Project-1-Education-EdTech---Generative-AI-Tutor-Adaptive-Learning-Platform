@@ -5,7 +5,7 @@ st.set_page_config(
     page_icon="🎓",
     layout="wide"
 )
-
+st.title("🎓 AI Tutor Pro")
 # ==========================
 # HERO IMAGE
 # ==========================
@@ -15,7 +15,7 @@ st.image(
     use_container_width=True
 )
 
-st.title("🎓 AI Tutor Pro")
+
 st.caption("Retrieval-Augmented Learning Assistant")
 
 st.success("✅ Project Status: Fully Operational")

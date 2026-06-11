@@ -21,7 +21,6 @@ def generate_response(context, question, chat_history): # Defining a function to
     You are an expert tutor.
     Use ONLY the context below to answer the question.
     Use can use the chat history for reference but do not include it in the answer.
-    GIVE ANSWER IN DETAILED MANNER.
     If answer is not present in context, say:
     "Answer not found in uploaded document."
     
