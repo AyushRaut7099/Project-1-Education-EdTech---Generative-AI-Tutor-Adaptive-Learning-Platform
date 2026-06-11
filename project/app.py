@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 st.set_page_config(
     page_title="AI Tutor Pro",
@@ -11,10 +12,9 @@ st.title("🎓 AI Tutor Pro")
 # ==========================
 
 st.image(
-    "E:\Embeddings 0th\img.png",
+    "assets/ai_tutor.gif",
     use_container_width=True
 )
-
 
 st.caption("Retrieval-Augmented Learning Assistant")
 
