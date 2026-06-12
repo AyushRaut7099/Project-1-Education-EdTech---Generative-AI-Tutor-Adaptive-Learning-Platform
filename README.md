@@ -107,7 +107,7 @@ Answer Generation
 
 ## Home Page
 
-![alt text](chat.png)
+![alt text](home.png)
 
 ```markdown
 
@@ -117,7 +117,7 @@ Answer Generation
 
 ## Chat Interface
 
-![alt text](home.png)
+![alt text](chat.png)
 
 ```markdown
 
