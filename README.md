@@ -110,7 +110,7 @@ Answer Generation
 ![alt text](chat.png)
 
 ```markdown
-![Home Page](E:\Embeddings 0th\project\images\home.png)
+
 ```
 
 ---
@@ -120,7 +120,7 @@ Answer Generation
 ![alt text](home.png)
 
 ```markdown
-![Chat Page](E:\Embeddings 0th\project\images\chat.png)
+
 ```
 
 ---
@@ -130,7 +130,7 @@ Answer Generation
 ![alt text](quiz.png)
 
 ```markdown
-![Quiz Page](E:\Embeddings 0th\project\images\quiz.png)
+
 ```
 
 ---
@@ -140,7 +140,7 @@ Answer Generation
 ![alt text](sources.png)
 
 ```markdown
-![Sources Page](E:\Embeddings 0th\project\images\sources.png)
+
 ```
 
 ---
