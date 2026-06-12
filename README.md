@@ -332,7 +332,7 @@ project/
 │
 ├── pages/
 │   ├── Upload.py
-│   ├── Sources.py
+│   ├── chat.py
 │   ├── Sources.py
 │
 ├── chroma_db/
